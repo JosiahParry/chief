@@ -7,11 +7,9 @@
 #'   `resolve_chief_path()` to find the database location.
 #' @return An MCP server object
 #' @export
-portfolio_mcp_server <- function(path = NULL) {
-  # Create Portfolio instance
+chief_mcp_server <- function(path = NULL) {
   portfolio <- Portfolio$new(path)
 
-  # Tool 1: Add Todo
   tool_add_todo <- mcpr::new_tool(
     name = "add_todo",
     description = "Create a new todo item",
@@ -75,7 +73,6 @@ portfolio_mcp_server <- function(path = NULL) {
     }
   )
 
-  # Tool 2: Get Todo
   tool_get_todo <- mcpr::new_tool(
     name = "get_todo",
     description = "Retrieve a specific todo by ID",
@@ -164,7 +161,6 @@ portfolio_mcp_server <- function(path = NULL) {
     }
   )
 
-  # Tool 4: Delete Todo
   tool_delete_todo <- mcpr::new_tool(
     name = "delete_todo",
     description = "Delete a todo by ID",
@@ -183,7 +179,6 @@ portfolio_mcp_server <- function(path = NULL) {
     }
   )
 
-  # Tool 5: Mark Complete
   tool_mark_complete <- mcpr::new_tool(
     name = "mark_complete",
     description = "Mark a todo as completed",
@@ -206,12 +201,11 @@ portfolio_mcp_server <- function(path = NULL) {
     }
   )
 
-  # Tool 6: List All Todos
   tool_list_all <- mcpr::new_tool(
     name = "list_all",
     description = "List all todos (completed and incomplete)",
     input_schema = mcpr::schema(
-      properties = mcpr::properties()
+      properties = setNames(list(), character())
     ),
     handler = function(params) {
       result <- portfolio$list_all()
@@ -219,12 +213,11 @@ portfolio_mcp_server <- function(path = NULL) {
     }
   )
 
-  # Tool 7: List Incomplete Todos
   tool_list_incomplete <- mcpr::new_tool(
     name = "list_incomplete",
     description = "List all incomplete todos",
     input_schema = mcpr::schema(
-      properties = mcpr::properties()
+      properties = setNames(list(), character())
     ),
     handler = function(params) {
       result <- portfolio$list_incomplete()
@@ -232,12 +225,11 @@ portfolio_mcp_server <- function(path = NULL) {
     }
   )
 
-  # Tool 8: List Completed Todos
   tool_list_completed <- mcpr::new_tool(
     name = "list_completed",
     description = "List all completed todos",
     input_schema = mcpr::schema(
-      properties = mcpr::properties()
+      properties = setNames(list(), character())
     ),
     handler = function(params) {
       result <- portfolio$list_completed()
@@ -340,11 +332,11 @@ portfolio_mcp_server <- function(path = NULL) {
     name = "list_categories",
     description = "List all categories",
     input_schema = mcpr::schema(
-      properties = mcpr::properties()
+      properties = setNames(list(), character())
     ),
     handler = function(params) {
       result <- portfolio$list_categories()
-      mcpr::response_text(result)
+      mcpr::response_text(yyjsonr::write_json_str(result))
     }
   )
 
@@ -352,7 +344,7 @@ portfolio_mcp_server <- function(path = NULL) {
   mcp <- mcpr::new_server(
     name = "Chief Portfolio Server",
     description = "MCP server for managing todos and categories",
-    version = "0.1.0"
+    version = as.character(packageVersion("chief"))
   )
 
   # Add all tools
@@ -370,17 +362,4 @@ portfolio_mcp_server <- function(path = NULL) {
   mcp <- mcpr::add_capability(mcp, tool_list_categories)
 
   mcp
-}
-
-#' Serve Portfolio MCP Server
-#'
-#' Convenience function to create and immediately start the Portfolio MCP server
-#' using stdin/stdout transport.
-#'
-#' @param path Optional path to the SQLite database. If NULL, uses
-#'   `resolve_chief_path()` to find the database location.
-#' @export
-serve_portfolio <- function(path = NULL) {
-  mcp <- portfolio_mcp_server(path)
-  mcpr::serve_io(mcp)
 }

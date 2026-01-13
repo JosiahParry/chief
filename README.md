@@ -1,0 +1,83 @@
+
+
+# Your personal chief of staff
+
+- Do you, like me, have crippling ADHD?
+- Do you need an accountability buddy?
+- Do you struggle to keep track of your own todo list?
+  - Or maybe you have one on your desk, another on your phone, a piece
+    of scrap paper?
+
+The `{chief}` package is your very own personal chief of staff designed
+to keep track of all of your \*\*@#&@R.
+
+This package is insprired by my own attempt at using Claude + Notion MCP
+as my own personal assistant. It worked exceptionally well! Until it
+didn’t. The Notion MCP server [has some
+challenges](https://github.com/makenotion/notion-mcp-server/issues/47#issuecomment-3739384218).
+
+## Installation
+
+``` r
+pak::pak("josiahparry/chief")
+```
+
+## What does `{chief}` do?
+
+`{chief}` is at its core, a very simple CRUD application that stores
+your data in a small sqlite database. However, `{chief}` also can be
+used as an MCP server via [`{mcpr}`]()
+
+## Using chief with claude code
+
+Chief works with a local SQLite database. To work with chief from claude
+code, first the http server needs to be running in the background.
+
+> [!NOTE]
+>
+> The `mcpr::serve_io()` does not yet work well with claude for the time
+> being.
+
+``` bash
+R -e "mcpr::serve_http(chief::chief_mcp_server())"
+```
+
+Next add the chief MCP server to claude code
+
+``` bash
+claude mcp add chief --transport http http://localhost:3000/mcp
+```
+
+Open a new claude session and now `{chief}` is available to you!
+
+Here’s an example of a conversation I had with claude code using chief
+
+    ❯ What can you do with chief mcp tools?
+
+    ⏺ With the Chief MCP tools, I can help you manage a complete todo list system with the following capabilities:
+
+      Todo Management
+
+      - Create todos with titles, descriptions, priorities (1-5), deadlines, and tags
+      - List todos in different ways (all, incomplete only, or completed only)
+      - Update todos to modify any fields like title, priority, deadline, or tags
+      - Mark todos as complete when you finish tasks
+      - Delete todos that are no longer needed
+      - Retrieve specific todos by their ID
+
+      Category Organization
+
+      - Create categories to group related todos (like "ricochet", "work", "personal")
+      - List all categories to see your organizational structure
+      - Update categories to change their title or description
+      - Assign todos to categories for better organization
+
+      Use Cases
+
+      - Track project tasks with priorities and deadlines
+      - Organize work across multiple projects using categories
+      - Set up reminders with deadline dates
+      - Tag tasks for easier filtering and search
+      - Monitor completed vs incomplete work
+
+      Essentially, it's a full-featured task management system that I can interact with on your behalf - adding tasks, organizing them, marking them complete, and keeping everything structured. Just tell me what you need to track and I can set it up for you!

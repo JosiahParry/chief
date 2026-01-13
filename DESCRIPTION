@@ -16,3 +16,5 @@ Imports:
     RSQLite,
     S7,
     ulid
+Suggests: 
+    mcpr
