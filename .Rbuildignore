@@ -2,3 +2,7 @@ CLAUDE.md
 README.qmd
 dev
 ^LICENSE\.md$
+^_pkgdown\.yml$
+^docs$
+^pkgdown$
+^\.github$
