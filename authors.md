@@ -1,0 +1,19 @@
+# Authors and Citation
+
+## Authors
+
+- **Josiah Parry**. Author, maintainer.
+  [](https://orcid.org/0000-0001-9910-865X)
+
+## Citation
+
+Parry J (2026). *chief: What the Package Does (One Line, Title Case)*. R
+package version 0.0.0.9000, <https://josiahparry.github.io/chief/>.
+
+    @Manual{,
+      title = {chief: What the Package Does (One Line, Title Case)},
+      author = {Josiah Parry},
+      year = {2026},
+      note = {R package version 0.0.0.9000},
+      url = {https://josiahparry.github.io/chief/},
+    }
