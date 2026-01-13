@@ -1,6 +1,6 @@
 devtools::load_all()
 
-folio <- Portfolio$new()
+folio <- Portfolio$new(":memory:")
 
 # Add categories
 work_cat <- new_category("Work", "Work-related tasks and projects")

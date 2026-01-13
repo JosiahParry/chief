@@ -87,7 +87,7 @@ chief_mcp_server <- function(path = NULL) {
     ),
     handler = function(params) {
       todo <- portfolio$get_todo(params$id)
-      mcpr::response_text(as.data.frame(todo))
+      mcpr::response_text(yyjsonr::write_json_str(as.data.frame(todo)))
     }
   )
 
@@ -209,7 +209,7 @@ chief_mcp_server <- function(path = NULL) {
     ),
     handler = function(params) {
       result <- portfolio$list_all()
-      mcpr::response_text(result)
+      mcpr::response_text(yyjsonr::write_json_str(result))
     }
   )
 
@@ -221,7 +221,7 @@ chief_mcp_server <- function(path = NULL) {
     ),
     handler = function(params) {
       result <- portfolio$list_incomplete()
-      mcpr::response_text(result)
+      mcpr::response_text(yyjsonr::write_json_str(result))
     }
   )
 
@@ -233,7 +233,7 @@ chief_mcp_server <- function(path = NULL) {
     ),
     handler = function(params) {
       result <- portfolio$list_completed()
-      mcpr::response_text(result)
+      mcpr::response_text(yyjsonr::write_json_str(result))
     }
   )
 
@@ -286,7 +286,7 @@ chief_mcp_server <- function(path = NULL) {
     ),
     handler = function(params) {
       category <- portfolio$get_category(params$id)
-      mcpr::response_text(as.data.frame(category))
+      mcpr::response_text(yyjsonr::write_json_str(as.data.frame(category)))
     }
   )
 

@@ -66,8 +66,20 @@ Portfolio <- R6::R6Class(
       "
       )
 
-      # insert a default category of "other"
-      self$add_category(new_category("other"))
+      # create the default Other category if it is missing
+      res <- DBI::dbGetQuery(
+        private$con,
+        "select id, title, description from categories where title = 'other'"
+      )
+
+      if (nrow(res) == 0L) {
+        self$add_category(
+          new_category(
+            "other",
+            "Default todo category as a catch all for all tasks."
+          )
+        )
+      }
 
       # instantiate the search engine
       private$search <- rbm25::BM25$new()
