@@ -1,12 +1,11 @@
+# `{chief}`
 
 
-# Your personal chief of staff
+> **your personal chief of staff**
 
 - Do you, like me, have crippling ADHD?
 - Do you need an accountability buddy?
-- Do you struggle to keep track of your own todo list?
-  - Or maybe you have one on your desk, another on your phone, a piece
-    of scrap paper?
+- Do you struggle to keep track of your own todo lists?
 
 The `{chief}` package is your very own personal chief of staff designed
 to keep track of all of your \*\*@#&@R.
