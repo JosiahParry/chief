@@ -5,7 +5,7 @@
 \title{Todo S7 Class}
 \usage{
 Todo(
-  id = "01KETG6YAY2FHXEK8Q5JZJHJYV",
+  id = "01KETGSZVZQYSQ2ZVET4E1ZV71",
   created = (function (.data = double(), tz = "") 
  {
      .POSIXct(.data, tz = tz)
@@ -24,7 +24,7 @@ Todo(
   title = character(0),
   description = character(0),
   tags = character(0),
-  category = "01KETG6YAY2FHXEK8Q5JZJHJYV"
+  category = "01KETGSZVZQYSQ2ZVET4E1ZV71"
 )
 }
 \arguments{

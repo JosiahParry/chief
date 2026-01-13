@@ -23,9 +23,49 @@ pak::pak("josiahparry/chief")
 
 ## What does `{chief}` do?
 
-`{chief}` is at its core, a very simple CRUD application that stores
-your data in a small sqlite database. However, `{chief}` also can be
-used as an MCP server via [`{mcpr}`]()
+`{chief}` is built for talking to AI agents via the [Model Context
+Protocol (MCP)](https://modelcontextprotocol.io/).
+
+I can’t keep track of my own todo list. But I can remember to send a
+message here and there. So I talk to Claude like a personal assistant to
+manage my todos instead.
+
+Under the hood, it’s a simple CRUD app with a SQLite database, exposed
+as an MCP server via [`{mcpr}`](https://github.com/devOpifex/mcpr/)
+
+## Database location
+
+By default, `{chief}` creates a database in your R user directory via
+`tools::R_user_dir("chief", "data")`.
+
+Override this by setting the `CHIEF_PATH` environment variable or the
+`chief.path` option.
+
+## Basic R usage
+
+While `{chief}` is designed for AI agent interaction, you can use it
+directly in R:
+
+``` r
+library(chief)
+
+# Create a portfolio
+folio <- Portfolio$new()
+
+# Add a todo
+todo <- new_todo(
+  title = "Write documentation",
+  priority = 4,
+  deadline = as.POSIXct("2026-01-15")
+)
+folio$add_todo(todo)
+
+# List incomplete todos
+folio$list_incomplete()
+
+# Mark complete
+folio$mark_complete(todo@id)
+```
 
 ## Using chief with claude code
 
