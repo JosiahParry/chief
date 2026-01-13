@@ -1,3 +1,9 @@
+#' ULID Property
+#'
+#' An S7 property for Universally Unique Lexicographically Sortable Identifiers (ULIDs).
+#' ULIDs are 26-character strings that are sortable by timestamp.
+#'
+#' @export
 Ulid <- new_property(
   class_character,
   validator = function(value) {
@@ -11,6 +17,20 @@ Ulid <- new_property(
   default = ulid::ulid()
 )
 
+#' Todo S7 Class
+#'
+#' An S7 class representing a todo item with metadata including creation time,
+#' completion status, deadline, priority, title, description, tags, and category.
+#'
+#' @param id ULID unique identifier for the todo.
+#' @param created POSIXct timestamp when the todo was created.
+#' @param completed POSIXct timestamp when the todo was completed (NA if incomplete).
+#' @param deadline POSIXct deadline for the todo (NA if no deadline).
+#' @param priority Integer priority level from 1 (lowest) to 5 (highest).
+#' @param title Character title of the todo.
+#' @param description Character description of the todo.
+#' @param tags Character vector of tags for categorization.
+#' @param category ULID of the category this todo belongs to.
 #' @export
 Todo <- S7::new_class(
   "Todo",
@@ -35,6 +55,17 @@ Todo <- S7::new_class(
   },
 )
 
+#' Create a new Todo object
+#'
+#' @param title The title of the todo (required).
+#' @param description Optional description of the todo.
+#' @param completed POSIXct timestamp when completed (default: NA).
+#' @param deadline POSIXct deadline for the todo (default: NA).
+#' @param priority Priority level from 1 (lowest) to 5 (highest) (default: 3).
+#' @param tags Character vector of tags (default: empty).
+#' @param category ULID of the category (default: NA, will use default category).
+#' @return A new Todo object.
+#' @export
 new_todo <- function(
   title,
   description = NA_character_,
@@ -57,7 +88,14 @@ new_todo <- function(
   )
 }
 
-
+#' Category S7 Class
+#'
+#' An S7 class representing a category for organizing todos.
+#'
+#' @param id ULID unique identifier for the category.
+#' @param title Character title of the category.
+#' @param description Character description of the category.
+#' @export
 Category <- S7::new_class(
   "Category",
   package = "chief",
@@ -73,6 +111,12 @@ Category <- S7::new_class(
   }
 )
 
+#' Create a new Category object
+#'
+#' @param title The title of the category (required).
+#' @param description Optional description of the category.
+#' @return A new Category object.
+#' @export
 new_category <- function(title, description = NA_character_) {
   Category(
     id = ulid::ulid(),
@@ -82,6 +126,7 @@ new_category <- function(title, description = NA_character_) {
 }
 # data.frame methods -----------------------------------------------------
 
+#' @export
 method(as.data.frame, Todo) <- function(x, ...) {
   as.data.frame(compact(list(
     id = x@id,
@@ -96,6 +141,7 @@ method(as.data.frame, Todo) <- function(x, ...) {
   )))
 }
 
+#' @export
 method(as.data.frame, Category) <- function(x, ...) {
   as.data.frame(compact(list(
     id = x@id,

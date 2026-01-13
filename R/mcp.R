@@ -205,7 +205,7 @@ chief_mcp_server <- function(path = NULL) {
     name = "list_all",
     description = "List all todos (completed and incomplete)",
     input_schema = mcpr::schema(
-      properties = setNames(list(), character())
+      properties = rlang::set_names(list(), character())
     ),
     handler = function(params) {
       result <- portfolio$list_all()
@@ -217,7 +217,7 @@ chief_mcp_server <- function(path = NULL) {
     name = "list_incomplete",
     description = "List all incomplete todos",
     input_schema = mcpr::schema(
-      properties = setNames(list(), character())
+      properties = rlang::set_names(list(), character())
     ),
     handler = function(params) {
       result <- portfolio$list_incomplete()
@@ -229,7 +229,7 @@ chief_mcp_server <- function(path = NULL) {
     name = "list_completed",
     description = "List all completed todos",
     input_schema = mcpr::schema(
-      properties = setNames(list(), character())
+      properties = rlang::set_names(list(), character())
     ),
     handler = function(params) {
       result <- portfolio$list_completed()
@@ -332,7 +332,7 @@ chief_mcp_server <- function(path = NULL) {
     name = "list_categories",
     description = "List all categories",
     input_schema = mcpr::schema(
-      properties = setNames(list(), character())
+      properties = rlang::set_names(list(), character())
     ),
     handler = function(params) {
       result <- portfolio$list_categories()
@@ -344,7 +344,7 @@ chief_mcp_server <- function(path = NULL) {
   mcp <- mcpr::new_server(
     name = "Chief Portfolio Server",
     description = "MCP server for managing todos and categories",
-    version = as.character(packageVersion("chief"))
+    version = as.character(utils::packageVersion("chief"))
   )
 
   # Add all tools

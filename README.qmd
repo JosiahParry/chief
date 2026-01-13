@@ -23,6 +23,8 @@ pak::pak("josiahparry/chief")
 ## What does `{chief}` do?
 
 `{chief}` is at its core, a very simple CRUD application that stores your data in a small sqlite database. 
+
+
 However, `{chief}` also can be used as an MCP server via [`{mcpr}`]()
 
 
