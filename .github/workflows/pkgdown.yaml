@@ -33,7 +33,7 @@ jobs:
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
-          extra-packages: github::devOpifex/mcpr, any::pkgdown, local::.
+          extra-packages: any::roxygen2, github::devOpifex/mcpr, any::pkgdown, local::.
           needs: website
 
       - name: Build site
