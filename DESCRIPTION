@@ -21,7 +21,7 @@ Imports:
     utils,
     yyjsonr,
     blob,
+    mcpr,
+    roxygen2,
     cli
-Suggests: 
-    mcpr
 URL: https://josiahparry.github.io/chief/
