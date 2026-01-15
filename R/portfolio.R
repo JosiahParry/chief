@@ -373,5 +373,11 @@ resolve_chief_path <- function(path = NULL) {
       )
     )
   }
+
+  if (!file.exists(path)) {
+    cli::cli_alert("Creating database at {.path {path}}")
+    dir.create(dirname(path), recursive = TRUE)
+    file.create(path)
+  }
   path
 }
