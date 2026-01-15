@@ -73,21 +73,14 @@ chief_mcp_server <- function(path = NULL) {
     }
   )
 
-  tool_get_todo <- mcpr::new_tool(
-    name = "get_todo",
+  resource_get_todo <- mcpr::new_resource(
+    name = "Todo by ID",
     description = "Retrieve a specific todo by ID",
-    input_schema = mcpr::schema(
-      properties = mcpr::properties(
-        id = mcpr::property_string(
-          "ID",
-          "The ULID of the todo to retrieve",
-          required = TRUE
-        )
-      )
-    ),
+    uri = "chief://todos/{id}",
+    mime_type = "application/json",
     handler = function(params) {
       todo <- portfolio$get_todo(params$id)
-      mcpr::response_text(yyjsonr::write_json_str(as.data.frame(todo)))
+      mcpr::response(as.data.frame(todo))
     }
   )
 
@@ -201,39 +194,36 @@ chief_mcp_server <- function(path = NULL) {
     }
   )
 
-  tool_list_all <- mcpr::new_tool(
-    name = "list_all",
+  resource_list_all <- mcpr::new_resource(
+    name = "All Todos",
     description = "List all todos (completed and incomplete)",
-    input_schema = mcpr::schema(
-      properties = rlang::set_names(list(), character())
-    ),
+    uri = "chief://todos/all",
+    mime_type = "application/json",
     handler = function(params) {
       result <- portfolio$list_all()
-      mcpr::response_text(yyjsonr::write_json_str(result))
+      mcpr::response(result)
     }
   )
 
-  tool_list_incomplete <- mcpr::new_tool(
-    name = "list_incomplete",
+  resource_list_incomplete <- mcpr::new_resource(
+    name = "Incomplete Todos",
     description = "List all incomplete todos",
-    input_schema = mcpr::schema(
-      properties = rlang::set_names(list(), character())
-    ),
+    uri = "chief://todos/incomplete",
+    mime_type = "application/json",
     handler = function(params) {
       result <- portfolio$list_incomplete()
-      mcpr::response_text(yyjsonr::write_json_str(result))
+      mcpr::response(result)
     }
   )
 
-  tool_list_completed <- mcpr::new_tool(
-    name = "list_completed",
+  resource_list_completed <- mcpr::new_resource(
+    name = "Completed Todos",
     description = "List all completed todos",
-    input_schema = mcpr::schema(
-      properties = rlang::set_names(list(), character())
-    ),
+    uri = "chief://todos/completed",
+    mime_type = "application/json",
     handler = function(params) {
       result <- portfolio$list_completed()
-      mcpr::response_text(yyjsonr::write_json_str(result))
+      mcpr::response(result)
     }
   )
 
@@ -271,22 +261,15 @@ chief_mcp_server <- function(path = NULL) {
     }
   )
 
-  # Tool 10: Get Category
-  tool_get_category <- mcpr::new_tool(
-    name = "get_category",
+  # Resource: Get Category
+  resource_get_category <- mcpr::new_resource(
+    name = "Category by ID",
     description = "Retrieve a specific category by ID",
-    input_schema = mcpr::schema(
-      properties = mcpr::properties(
-        id = mcpr::property_string(
-          "ID",
-          "The ULID of the category to retrieve",
-          required = TRUE
-        )
-      )
-    ),
+    uri = "chief://categories/{id}",
+    mime_type = "application/json",
     handler = function(params) {
       category <- portfolio$get_category(params$id)
-      mcpr::response_text(yyjsonr::write_json_str(as.data.frame(category)))
+      mcpr::response(as.data.frame(category))
     }
   )
 
@@ -327,16 +310,15 @@ chief_mcp_server <- function(path = NULL) {
     }
   )
 
-  # Tool 12: List Categories
-  tool_list_categories <- mcpr::new_tool(
-    name = "list_categories",
+  # Resource: List Categories
+  resource_list_categories <- mcpr::new_resource(
+    name = "All Categories",
     description = "List all categories",
-    input_schema = mcpr::schema(
-      properties = rlang::set_names(list(), character())
-    ),
+    uri = "chief://categories",
+    mime_type = "application/json",
     handler = function(params) {
       result <- portfolio$list_categories()
-      mcpr::response_text(yyjsonr::write_json_str(result))
+      mcpr::response(result)
     }
   )
 
@@ -347,19 +329,21 @@ chief_mcp_server <- function(path = NULL) {
     version = as.character(utils::packageVersion("chief"))
   )
 
-  # Add all tools
+  # Add tools (write operations)
   mcp <- mcpr::add_capability(mcp, tool_add_todo)
-  mcp <- mcpr::add_capability(mcp, tool_get_todo)
   mcp <- mcpr::add_capability(mcp, tool_update_todo)
   mcp <- mcpr::add_capability(mcp, tool_delete_todo)
   mcp <- mcpr::add_capability(mcp, tool_mark_complete)
-  mcp <- mcpr::add_capability(mcp, tool_list_all)
-  mcp <- mcpr::add_capability(mcp, tool_list_incomplete)
-  mcp <- mcpr::add_capability(mcp, tool_list_completed)
   mcp <- mcpr::add_capability(mcp, tool_add_category)
-  mcp <- mcpr::add_capability(mcp, tool_get_category)
   mcp <- mcpr::add_capability(mcp, tool_update_category)
-  mcp <- mcpr::add_capability(mcp, tool_list_categories)
+
+  # Add resources (read operations)
+  mcp <- mcpr::add_capability(mcp, resource_get_todo)
+  mcp <- mcpr::add_capability(mcp, resource_list_all)
+  mcp <- mcpr::add_capability(mcp, resource_list_incomplete)
+  mcp <- mcpr::add_capability(mcp, resource_list_completed)
+  mcp <- mcpr::add_capability(mcp, resource_get_category)
+  mcp <- mcpr::add_capability(mcp, resource_list_categories)
 
   mcp
 }

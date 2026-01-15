@@ -22,6 +22,7 @@ Imports:
     yyjsonr,
     blob,
     mcpr,
+    ambiorix,
     roxygen2,
     cli
 URL: https://josiahparry.github.io/chief/
